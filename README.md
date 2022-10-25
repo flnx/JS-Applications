@@ -1,5 +1,5 @@
 # JS-Applications
-###Softuni JS Apps module
+### Softuni JS Apps module
 
 
 ## 🔭 In Progress...
