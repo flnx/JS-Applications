@@ -1,82 +1,94 @@
-async function getRecipes() {
-    const response = await fetch('http://localhost:3030/jsonstore/cookbook/recipes');
-    const recipes = await response.json();
+window.addEventListener('load', executor);
 
-    return Object.values(recipes);
+function getRecipesPreview() {
+  const url = 'http://localhost:3030/jsonstore/cookbook/recipes';
+  const data = fetch(url)
+    .then((res) => res.json())
+    .then((data) => data);
+  return data;
 }
 
-async function getRecipeById(id) {
-    const response = await fetch('http://localhost:3030/jsonstore/cookbook/details/' + id);
-    const recipe = await response.json();
-
-    return recipe;
+function getRecipesById(id) {
+  const url = `http://localhost:3030/jsonstore/cookbook/details/${id}/`;
+  const data = fetch(url)
+    .then((res) => res.json())
+    .then((data) => data);
+  return data;
 }
 
-function createRecipePreview(recipe) {
-    const result = e('article', { className: 'preview', onClick: toggleCard },
-        e('div', { className: 'title' }, e('h2', {}, recipe.name)),
-        e('div', { className: 'small' }, e('img', { src: recipe.img })),
-    );
+function executor() {
+  const mainElem = document.querySelector('main');
+  mainElem.querySelector('p').remove();
+  const data = getRecipesPreview();
 
-    return result;
-
-    async function toggleCard() {
-        const fullRecipe = await getRecipeById(recipe._id);
-
-        result.replaceWith(createRecipeCard(fullRecipe));
+  data.then((recpsData) => {
+    const recipes = Object.values(recpsData);
+    for (let r of recipes) {
+      mainElem.appendChild(createPreview(r.name, r.img, r._id));
     }
+  });
 }
 
-function createRecipeCard(recipe) {
-    const result = e('article', {},
-        e('h2', {}, recipe.name),
-        e('div', { className: 'band' },
-            e('div', { className: 'thumb' }, e('img', { src: recipe.img })),
-            e('div', { className: 'ingredients' },
-                e('h3', {}, 'Ingredients:'),
-                e('ul', {}, recipe.ingredients.map(i => e('li', {}, i))),
-            )
-        ),
-        e('div', { className: 'description' },
-            e('h3', {}, 'Preparation:'),
-            recipe.steps.map(s => e('p', {}, s))
-        ),
-    );
+function createPreview(title, imgSrc, id) {
+  const article = createElement('preview', 'article');
+  const divTitle = createElement('title', 'div');
+  const h2 = createElement('', 'h2', 'ADDTITLE');
+  const divSmall = createElement('small', 'div', title);
+  const img = document.createElement('img');
+  img.src = imgSrc;
 
-    return result;
-}
+  append(divTitle, h2);
+  append(divSmall, img);
+  append(article, divTitle, divSmall);
 
-window.addEventListener('load', async () => {
-    const main = document.querySelector('main');
-
-    const recipes = await getRecipes();
-    const cards = recipes.map(createRecipePreview);
-
-    main.innerHTML = '';
-    cards.forEach(c => main.appendChild(c));
-});
-
-function e(type, attributes, ...content) {
-    const result = document.createElement(type);
-
-    for (let [attr, value] of Object.entries(attributes || {})) {
-        if (attr.substring(0, 2) == 'on') {
-            result.addEventListener(attr.substring(2).toLocaleLowerCase(), value);
-        } else {
-            result[attr] = value;
-        }
-    }
-
-    content = content.reduce((a, c) => a.concat(Array.isArray(c) ? c : [c]), []);
-
-    content.forEach(e => {
-        if (typeof e == 'string' || typeof e == 'number') {
-            const node = document.createTextNode(e);
-            result.appendChild(node);
-        } else {
-            result.appendChild(e);
-        }
+  article.addEventListener('click', () => {
+    const data = getRecipesById(id);
+    data.then((r) => {
+      const art = createRecipe(r.name, r.ingredients, r.steps, r.img, r._id);
+      article.replaceWith(art)
     });
+  });
 
-    return result;
+  return article;
+}
+
+function createRecipe(title, ingr, prepSteps, imgSrc) {
+  const article = document.createElement('article');
+  const h2 = createElement('', 'h2', title);
+  const divBand = createElement('band', 'div');
+  const divThumb = createElement('thumb', 'div');
+
+  const img = document.createElement('img');
+  img.src = imgSrc;
+  divThumb.appendChild(img);
+
+  const divIngredients = createElement('ingredients', 'div');
+  const h3ingredients = createElement('', 'h3', 'Ingredients:');
+  const ul = document.createElement('ul');
+  const divDesc = createElement('description', 'div');
+  const h3Preparation = createElement('', 'h3', 'Preparation');
+
+  append(divIngredients, h3ingredients, ul);
+  append(divBand, divThumb, divIngredients);
+  append(divDesc, h3Preparation);
+  append(article, h2, divBand, divDesc);
+
+  ingr.map((x) => ul.appendChild(createElement('', 'li', x)));
+  prepSteps.map((x) => divDesc.appendChild(createElement('', 'p', x)));
+  return article;
+}
+
+function append(parent, ...elements) {
+  elements.map((e) => parent.appendChild(e));
+}
+
+function createElement(className, type, content) {
+  const element = document.createElement(type);
+  if (className) {
+    element.classList.add(className);
+  }
+  if (content) {
+    element.textContent = content;
+  }
+  return element;
 }
