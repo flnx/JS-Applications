@@ -20,7 +20,7 @@ function attachEvents() {
     if (!weatherResultArr) {
       return;
     }
-
+    userLocation.value = '';
     generateHtml(weatherResultArr);
   }
 
@@ -95,15 +95,14 @@ function attachEvents() {
       const spanCondition2 = createElement('span', 'forecast-data', x.condition);
       append(spanWrapper2, spanSymbol2, spanDeg2, spanCondition2);
       append(div2, spanWrapper2);
-
     });
 
     // clear previous html elements
      const clearCurrent = Array.from(currentElem.children);
      const clearUpcoming = Array.from(upcomingElem.children);
-     
-     clearCurrent.slice(0, 1).forEach((x) => x.remove());
-     clearUpcoming.slice(0, 1).forEach((x) => x.remove());
+
+     clearCurrent.slice(1).forEach((x) => x.remove());
+     clearUpcoming.slice(1).forEach((x) => x.remove());
 
     // append everything to the page
     currentElem.appendChild(div);
