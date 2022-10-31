@@ -1,5 +1,5 @@
 async function loadCommits() {
-  // read input fileds
+  // read input fieds
   const username = document.getElementById('username').value;
   const repo = document.getElementById('repo').value;
   const list = document.getElementById('commits');
