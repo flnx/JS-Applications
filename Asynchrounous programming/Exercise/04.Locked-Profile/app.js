@@ -31,14 +31,15 @@ async function lockedProfile() {
       <button>Show more</button>
       `;
       const btn = div.querySelector('button');
+
       btn.addEventListener('click', () => {
       const check = div.querySelector('input[type=radio]:checked');
       const hiddenDiv = div.querySelector('div');
 
-      if (check.value === 'unlock' && btn.textContent == 'Show more') {
+      if (check.value == 'unlock' && btn.textContent == 'Show more') {
         hiddenDiv.classList.toggle('hiddenInfo');
         btn.textContent = 'Show less';
-      } else if (check.value === 'unlock' && btn.textContent == 'Show less'){
+      } else if (check.value == 'unlock' && btn.textContent == 'Show less'){
         hiddenDiv.classList.toggle('hiddenInfo');
         btn.textContent = 'Show more';
       }
