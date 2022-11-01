@@ -1,6 +1,8 @@
 const select = document.getElementById('posts');
 const title = document.getElementById('post-title');
 const postComments = document.getElementById('post-comments');
+const body = document.getElementById('post-body');
+
 document.getElementById('btnLoadPosts').addEventListener('click', getPosts);
 document.getElementById('btnViewPost').addEventListener('click', getComments);
 
@@ -8,6 +10,7 @@ function loadPosts({ id, title }) {
   const option = document.createElement('option');
   option.value = id;
   option.textContent = title;
+
   select.appendChild(option);
 }
 
@@ -15,65 +18,47 @@ function loadComments({ id, text }) {
   const li = document.createElement('li');
   li.textContent = text;
   li.id = id;
+  
   postComments.appendChild(li);
 }
 
 async function getPosts() {
   try {
     const res = await fetch('http://localhost:3030/jsonstore/blog/posts');
-
-    if (!res.ok) {
-      throw new Error('Error')
-    }
-
     const data = await res.json();
     select.innerHTML = '';
+
     Object.values(data).forEach((obj) => loadPosts(obj));
-  } catch (err) {
-    console.log(err.message);
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
 async function getComments() {
   try {
-    const res = await fetch('http://localhost:3030/jsonstore/blog/comments');
-
-    if (!res.ok) {
-      throw new Error('Error')
-    }
-
-    const data = await res.json();
-    
-    const comments = Object.values(data)
-      .filter((x) => x.postId == select.value);
+    const res2 = await fetch(`http://localhost:3030/jsonstore/blog/posts`);
+    const postsData = await res2.json();
 
     const postTitle = Array.from(select.options)
-      .find((x) => x.value == select.value);
+      .find((x) => x.value === select.value);
+ 
+    const bodyTitle = Object.values(postsData)
+      .find((obj) => obj.title === postTitle.textContent);
 
     title.textContent = postTitle.textContent;
-    setBodyDetails();
+    body.textContent = bodyTitle.body;
+
+    const res = await fetch('http://localhost:3030/jsonstore/blog/comments');
+    const commentsData = await res.json();
 
     postComments.innerHTML = '';
-    Object.values(comments).forEach((x) => loadComments(x));
-  } catch (err) {
-    console.log(err.message);
-  }
-}
 
-async function setBodyDetails() {
-  try {
-    const res = await fetch(`http://localhost:3030/jsonstore/blog/posts`);
-
-    if (!res.ok) {
-      throw new Error('Error')
+    for (const obj of Object.values(commentsData)) {
+      if (obj.postId == select.value) {
+        loadComments(obj);
+      }
     }
-  
-    const data = await res.json();
-    const bodyTitle = Object.values(data)
-      .find((obj) => obj.id == select.value);
-
-    document.getElementById('post-body').textContent = bodyTitle.body;
-  } catch (err) {
-    console.log(err.message);
+  } catch (error) {
+    console.log(error.message);
   }
 }
