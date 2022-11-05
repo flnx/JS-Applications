@@ -34,7 +34,6 @@ async function submitData(student) {
       throw new Error(error.message)
     }
 
-    const data = await res.json();
     table.replaceChildren();
     getStudents();
   } catch(err) {
