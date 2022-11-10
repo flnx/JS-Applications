@@ -71,13 +71,14 @@ export async function postComment(e) {
     if (postText == '' || username == '') {
       throw new Error("Fields can't be empty!");
     }
+    
     const commentId = commentForm.getAttribute('data-id');
 
     const body = {
       postText,
       username,
       commentId,
-      date: new Date(),
+      date: new Date,
     };
 
     const res = await fetch(url + 'comments', {

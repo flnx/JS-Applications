@@ -8,7 +8,6 @@ document.querySelector('nav li a').addEventListener('click', showHome)
 
 
 export function showHome() {
-  console.log('hi');
   document.querySelector('.container').replaceChildren(main);
   loadTopics();
 }
@@ -32,7 +31,7 @@ export async function onPost(e) {
       title: topicName,
       username,
       content: postText,
-      date: new Date(),
+      date: new Date,
     };
 
     const response = await fetch(
