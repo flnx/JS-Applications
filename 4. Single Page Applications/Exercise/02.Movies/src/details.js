@@ -1,0 +1,1 @@
+const movieDetails = document.getElementById('movie-example');
