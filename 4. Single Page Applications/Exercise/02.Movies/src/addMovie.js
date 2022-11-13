@@ -1,5 +1,5 @@
 import { refreshPage } from "./refreshPage.js";
-import { likeRequest } from "./requests.js";
+import { putLikeRequest } from "./requests.js";
 import { getUserData } from "./auth.js"
 import { homePage } from "./home.js"
 
@@ -28,7 +28,7 @@ export async function onAdd() {
     img
   }
   
-  likeRequest('data/movies', body, token);
+  putLikeRequest('data/movies', body, token);
   homePage();
   form.reset()
 }

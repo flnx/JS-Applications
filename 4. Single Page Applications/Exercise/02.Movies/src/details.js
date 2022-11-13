@@ -1,8 +1,7 @@
-import { getRequest } from './requests.js';
+import { checkUserLikes, getRequest, likesRequest } from './requests.js';
 import { createDetailsPreview } from './dom.js';
 import { getUserData } from './auth.js';
 import { refreshPage } from './refreshPage.js';
-import { checkUserLikes, likesRequest } from './like.js';
 
 const container = document.getElementById('container');
 const footer = document.querySelector('.page-footer');
@@ -19,8 +18,8 @@ export async function onDetails(e) {
   if (permissions != 'user is not logged') {
     isLikedByUser = await checkUserLikes(movieId);
   }
-  
-  const totalLikes = await likesRequest(movieId);
+  const userId = getUserData().userDataInfo._id;
+  const totalLikes = await likesRequest(movieId, userId);
   const movieElement = createDetailsPreview(movie, permissions, totalLikes, isLikedByUser);
 
   refreshPage()

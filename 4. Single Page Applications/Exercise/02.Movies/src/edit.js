@@ -38,5 +38,7 @@ export function onEdit(e) {
   };
 
   putRequest(`data/movies/${movieId}`, body, token);
-  onDetails(e)
+  setTimeout(() => {
+    onDetails(e)
+  }, 25);
 }

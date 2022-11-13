@@ -1,4 +1,3 @@
-import { checkAuthorization } from './auth.js';
 import { refreshPage } from './refreshPage.js';
 import { homePage } from './home.js';
 import { loginOrRegisterReq } from './requests.js';
