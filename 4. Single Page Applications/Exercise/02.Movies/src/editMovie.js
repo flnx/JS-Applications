@@ -1,1 +1,0 @@
-const section = document.getElementById('edit-movie');

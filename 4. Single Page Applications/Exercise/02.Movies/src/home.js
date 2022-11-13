@@ -1,24 +1,27 @@
-const homePage = document.getElementById('home-page');
-const movieListElem = homePage.querySelector('.card-deck');
-
-
+import { checkAuthorization } from './auth.js';
 import { createElement } from './dom.js';
-import { getRequest, postRequest, putRequest, delRequest } from './requests.js';
+import { refreshPage } from './refreshPage.js';
+import { getRequest } from './requests.js';
 
+const container = document.getElementById('container');
+const footer = document.querySelector('.page-footer');
 
-loadMovies();
+const homePageElem = document.getElementById('home-page');
+const ulMovies = homePageElem.querySelector('#movies-list');
 
-async function loadMovies() {
-  const moviesData = await getRequest('movies');
-  const fragment = document.createDocumentFragment()
-  
+export async function homePage() {
+  const moviesData = await getRequest('data/movies');
 
   if (!moviesData) {
-    return
+    return;
   }
 
-  fragment.append(...moviesData.map(createElement));
-  [...container.children].slice(2, -1).map(x => x.remove());
-  movieListElem.appendChild(fragment);
+  checkAuthorization();
+  refreshPage();
 
+  const fragment = document.createDocumentFragment();
+  fragment.append(...moviesData.map(createElement));
+
+  ulMovies.replaceChildren(fragment);
+  container.insertBefore(homePageElem, footer);
 }
