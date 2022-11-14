@@ -29,6 +29,8 @@ export async function onAdd() {
   }
   
   putLikeRequest('data/movies', body, token);
-  homePage();
+  setTimeout(() => {
+    homePage();
+  }, 100);
   form.reset()
 }

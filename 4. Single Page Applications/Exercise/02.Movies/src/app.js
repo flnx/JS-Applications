@@ -40,6 +40,6 @@ function handler(e) {
   }
 
   const att = e.target.getAttribute('data-btn-type');
-  const fn = navigation[att];
-  fn(e, container, footer);
+  const view = navigation[att];
+  view(e, container, footer);
 }

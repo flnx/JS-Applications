@@ -18,8 +18,8 @@ export async function onDetails(e) {
   if (permissions != 'user is not logged') {
     isLikedByUser = await checkUserLikes(movieId);
   }
-  const userId = getUserData().userDataInfo._id;
-  const totalLikes = await likesRequest(movieId, userId);
+  // const userId = getUserData().userDataInfo._id;
+  const totalLikes = await likesRequest(movieId);
   const movieElement = createDetailsPreview(movie, permissions, totalLikes, isLikedByUser);
 
   refreshPage()
