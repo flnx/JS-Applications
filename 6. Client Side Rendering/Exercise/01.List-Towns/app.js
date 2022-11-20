@@ -1,35 +1,23 @@
 import { html, render } from '../../../node_modules/lit-html/lit-html.js';
 
-const rootDiv = document.getElementById('root');
 const form = document.getElementById('towns');
-const loadBtn = document.getElementById('btnLoadTowns');
 
-const towns = [];
-
-loadBtn.addEventListener('click', onLoad);
-
-const townsTemplate = () => {
-  return html`${towns.map((town) => html`<li>${town}</li>`)}`;
-};
-
-const townsWrapper = () => {
-  return html`
-    <ul>
-      ${townsTemplate()}
-    </ul>
-  `;
-};
-
-function update() {
-  render(townsWrapper(), rootDiv);
-}
+document.getElementById('btnLoadTowns').addEventListener('click', onLoad);
 
 function onLoad(e) {
   e.preventDefault();
 
-  const userInput = form.value.trim().split(', ');
-  userInput.forEach((town) => towns.push(town));
+  const towns = form.value.split(', ');
+  update(renderTowns(towns));
+}
 
-  update();
-  form.value = '';
+const renderTowns = (towns) =>
+  html` <ul>
+    ${towns.map(townsTemplate)}
+  </ul>`;
+
+const townsTemplate = (town) => html`<li>${town}</li>`;
+
+function update(towns) {
+  render(towns, document.getElementById('root'));
 }
