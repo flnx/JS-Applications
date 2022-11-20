@@ -1,21 +1,8 @@
 import { html } from '../../../../node_modules/lit-html/lit-html.js';
 
-export const renderBooks = (id, book) => {
+export const renderPage = (ctx, isEdit, book) => {
   return html`
-    <tr>
-      <td>${book.title}</td>
-      <td>${book.author}</td>
-      <td>
-        <button id="show-edit-form" data-id="${id}">Edit</button>
-        <button id="onDelete" data-id="${id}">Delete</button>
-      </td>
-    </tr>
-  `;
-};
-
-export const renderPage = (createForm) => {
-  return html`
-    <button id="loadBooks">LOAD ALL BOOKS</button>
+    <button id="loadBooks" @click=${ctx.loadBooks.bind(null, ctx)}>LOAD ALL BOOKS</button>
     <table>
       <thead>
         <tr>
@@ -26,33 +13,44 @@ export const renderPage = (createForm) => {
       </thead>
       <tbody></tbody>
     </table>
-    <div class="formContainer">
-      ${createForm ? renderEditForm() : renderCreateForm()}
-    </div>
+      ${isEdit ? renderEditForm(book, ctx) : renderCreateForm(ctx)}
   `;
 };
 
-export const renderEditForm = () => {
+export const renderBooks = (id, book, ctx) => {
   return html`
-  <form id="edit-form">
+    <tr>
+      <td>${book.title}</td>
+      <td>${book.author}</td>
+      <td>
+        <button data-id="${id}" @click=${(e) => ctx.showEditForm(e, id, ctx, book)}>
+          Edit
+        </button>
+        <button data-id="${id}" @click=${(e) => ctx.onDelete(e, ctx)}>Delete</button>
+      </td>
+    </tr>
+  `;
+};
+
+export const renderEditForm = (book, ctx) => {
+  return html` <form id="edit-form">
     <input type="hidden" name="id" />
     <h3>Edit book</h3>
     <label>TITLE</label>
-    <input type="text" name="title" placeholder="Title..." />
+    <input type="text" name="title" placeholder="Title..." .value=${book.title} />
     <label>AUTHOR</label>
-    <input type="text" name="author" placeholder="Author..." />
-    <input type="submit" value="Save" id="save-edited-book" />
+    <input type="text" name="author" placeholder="Author..." .value=${book.author} />
+    <input type="submit" value="Save" @click=${(e) => ctx.onSave(e, ctx)} />
   </form>`;
 };
 
-export const renderCreateForm = () => {
-  return html`
-  <form id="add-form">
+export const renderCreateForm = (ctx) => {
+  return html` <form id="add-form" @submit=${ctx.onSubmit.bind(null, ctx)}>
     <h3>Add book</h3>
     <label>TITLE</label>
     <input type="text" name="title" placeholder="Title..." />
     <label>AUTHOR</label>
     <input type="text" name="author" placeholder="Author..." />
-    <input type="submit" value="Submit" id="create-a-book"/>
+    <input type="submit" value="Submit" />
   </form>`;
 };

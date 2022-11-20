@@ -1,22 +1,19 @@
 import * as api from './api.js';
 
-export async function onSubmit(form, context) {
+export async function onSubmit(ctx, e) {
+  e.preventDefault();
+
+  const form = e.target;
   const formData = new FormData(form);
 
-  const title = formData.get('title');
-  const author = formData.get('author');
+  const { title, author } = Object.fromEntries(formData);
 
   if (title == '' || author == '') {
-    return alert('All fields are required');
+    return 'All fields are required';
   }
+  
+  api.post('/', { title, author });
 
-  const body = {
-    title,
-    author,
-  };
-
-  api.post('/', body);
-
-  context.loadAllBooks();
+  ctx.loadBooks(ctx);
   form.reset();
 }

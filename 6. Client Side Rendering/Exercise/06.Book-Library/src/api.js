@@ -16,10 +16,15 @@ async function require(method, path, data) {
 
     if (res.ok == false) {
       const error = await res.json();
-      throw new Error(error);
+      throw new Error(error.message);
     }
 
-    return res.json();
+    if (res.status == 204) {
+      return res;
+    } else {
+      return res.json();
+    }
+
 
   } catch (err) {
     alert(err.message);

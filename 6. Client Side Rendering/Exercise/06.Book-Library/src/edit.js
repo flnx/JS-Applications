@@ -1,37 +1,22 @@
 import * as api from './api.js';
 
-let id = null;
-let title = null;
-let author = null;
-let form = null;
+let bookId = null;
 
-export function showEditForm(target, context, parent) {
-  id = target.dataset.id;
-
-  title = parent.children[0].textContent;
-  author = parent.children[1].textContent;
-
-  context.renderHtmlPage('show edit form');
-
-  form = document.getElementById('edit-form');
-
-  form.querySelector('input[name=author]').value = author;
-  form.querySelector('input[name=title]').value = title;
+export function showEditForm(_, id, ctx, book) {
+  bookId = id;
+  ctx.renderHtmlPage(ctx, 'showEdit', book);
 }
 
-export function onSave(_, context) {
+export function onSave(e, ctx) {
+  e.preventDefault();
+
+  const form = e.target.parentElement;
   const formData = new FormData(form);
 
-  const title = formData.get('title');
-  const author = formData.get('author');
+  const { title, author } = Object.fromEntries(formData);
 
-  const body = {
-    title,
-    author,
-  };
+  api.put(`/${bookId}`, { title, author });
 
-  api.put(`/${id}`, body);
-
-  context.loadAllBooks();
-  setTimeout(() => context.renderHtmlPage(), 10);
+  setTimeout(() => ctx.loadBooks(), 10)
+  ctx.renderHtmlPage(ctx);
 }

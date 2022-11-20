@@ -1,8 +1,8 @@
 import * as api from './api.js';
 
-export function onDelete(target, context) {
-  const id = target.dataset.id;
+export function onDelete(e, ctx) {
+  const id = e.target.dataset.id;
 
   api.delete(`/${id}`);
-  context.loadAllBooks();
+  setTimeout(() => ctx.loadBooks(), 10)
 }
