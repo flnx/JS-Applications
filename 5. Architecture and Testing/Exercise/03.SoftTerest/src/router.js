@@ -3,7 +3,6 @@ export function init(links) {
   const nav = document.querySelector('.navbar');
 
   nav.addEventListener('click', onNavigation);
-
   const ctx = {
     showSection,
     goTo,
