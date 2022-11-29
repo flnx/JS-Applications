@@ -71,7 +71,7 @@ const detailsTemplate = (item, onDelete, onApply, session) => html`
                    <a href="javascript:void(0)" @click="${onDelete}" id="delete-btn">Delete</a>`
             : nothing}
            ${!session.isOwner() && session.hasLoggedUser && !session.hasUserApplied
-            ? html`<a href="/" @click=${onApply} id="apply-btn">Apply</a>`
+            ? html`<a href="javascript:void(0)" @click=${onApply} id="apply-btn">Apply</a>`
             : nothing}
           <!--Bonus - Only for logged-in users ( not authors )-->
         </div>
