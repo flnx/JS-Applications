@@ -1,5 +1,4 @@
 import { authCheck } from "../views/auth.js";
-
 const url = 'http://localhost:3030/';
 
 async function request(method, path, data) {
