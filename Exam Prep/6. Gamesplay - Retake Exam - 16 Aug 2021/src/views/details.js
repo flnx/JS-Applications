@@ -6,8 +6,8 @@ export const detailsPage = async (ctx) => {
   const owner = getUser()?._id;
 
   const [data, comments] = await Promise.all([
-    await getItemDetails(ctx.params.id),
-    await getComments(ctx.params.id),
+    getItemDetails(ctx.params.id),
+    getComments(ctx.params.id),
   ]);
 
   const session = {

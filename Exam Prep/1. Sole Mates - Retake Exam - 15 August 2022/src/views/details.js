@@ -11,7 +11,6 @@ export const detailsPage = async (ctx) => {
 
     if (confirmMessage) {
       await deleteItem(ctx.params.id);
-      console.log(ctx.params.id);
       ctx.page.redirect('/dashboard');
     }
   };
