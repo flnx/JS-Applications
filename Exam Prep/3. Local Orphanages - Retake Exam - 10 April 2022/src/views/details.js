@@ -55,7 +55,7 @@ const detailsTemplate = (onDelete, onDonate, data, session) => html`
                 : nothing}
               <!--Bonus - Only for logged-in users ( not authors )-->
               ${!session.isOwner() && session.hasLoggedUser && !session.hasUserDonated
-                ? html`<a href="javascript:void(0)" @click=${onDonate} class="donate-btn btn">Donate</a>`
+                ? html`<a href="#" @click=${onDonate} class="donate-btn btn">Donate</a>`
                 : nothing}
             </div>
           </div>
@@ -65,8 +65,7 @@ const detailsTemplate = (onDelete, onDonate, data, session) => html`
   </main>
 `;
 
-const onDelete = async (e) => {
-  e.preventDefault();
+const onDelete = async () => {
   const confirmMessage = confirm('Are you sure you want to delete this offer?');
 
   if (confirmMessage) {
@@ -75,9 +74,7 @@ const onDelete = async (e) => {
   }
 };
 
-const onDonate = async (e) => {
-  e.preventDefault();
-
+const onDonate = async () => {
   await donate({ postId: context.params.id });
   context.page.redirect(`/details/${context.params.id}`);
 };
