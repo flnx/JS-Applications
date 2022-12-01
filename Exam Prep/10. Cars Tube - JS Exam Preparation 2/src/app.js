@@ -1,0 +1,27 @@
+import { page }  from './lib.js';
+import { ctxDecorator } from './layout.js';
+import { loginPage } from './views/login.js';
+import { registerPage } from './views/register.js';
+import { onLogout } from './views/logout.js';
+import { createPage } from './views/create.js';
+import { editPage } from './views/edit.js';
+import { detailsPage } from './views/details.js';
+import { catalogPage } from './views/catalog.js';
+import { homePage } from './views/home.js';
+import { searchPage } from './views/search.js';
+import { myListingsPage } from './views/my-listings.js';
+
+page(ctxDecorator);
+page('/', homePage);
+page('/my-listings', myListingsPage);
+page('/search-page', searchPage);
+page('/catalog', catalogPage);
+page('/login', loginPage);
+page('/register', registerPage);
+page('/logout', onLogout);
+page('/create', createPage);
+page('/edit', editPage);
+page('/edit/:id', editPage);
+page('/details', detailsPage);
+page('/details/:id', detailsPage);
+page.start();
