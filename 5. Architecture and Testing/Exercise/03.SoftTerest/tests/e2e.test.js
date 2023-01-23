@@ -35,15 +35,14 @@ describe('E2E tests', function () {
   if (DEBUG) {
     this.timeout(120000);
   } else {
-    this.timeout(60000);
+    this.timeout(6000);
   }
 
   before(async () => {
     if (DEBUG) {
-      // 
-      browser = await chromium.launch({ headless: false, slowMo: 2000 });
+      browser = await chromium.launch({ headless: false, slowMo: 500 });
     } else {
-      browser = await chromium.launch({ headless: false, slowMo: 2000 });
+      browser = await chromium.launch();
     }
   });
 
