@@ -1,0 +1,22 @@
+{
+  "name": "clear-career",
+  "version": "1.0.0",
+  "description": "Clear career Single Page Application",
+  "main": "index.html",
+  "scripts": {
+    "test": "mocha tests",
+    "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1",
+    "dev": "lite-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "http-server": "^14.1.1",
+    "lit-html": "^2.4.0",
+    "lite-server": "^2.6.1",
+    "mocha": "^10.1.0",
+    "page": "^1.11.6",
+    "playwright-chromium": "^1.28.1"
+  }
+}

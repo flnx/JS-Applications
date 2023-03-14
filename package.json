@@ -1,0 +1,23 @@
+{
+  "name": "js-applications",
+  "version": "1.0.0",
+  "description": "- HTTP and REST Services\r - Asynchronous Programming\r - Remote Data and Authentication\r - Signle Page Applications\r - Architecture and Testing\r - Client Side Rendering\r - Routing\r - Modular Applications\r - Exam Preparation\r - Workshop: End-to-End-Application - Part 1\r - Workshop: End-to-End-Application - Part 2\r - Workshop: Web Components\r - Regular Exam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flnx/JS-Applications.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flnx/JS-Applications/issues"
+  },
+  "homepage": "https://github.com/flnx/JS-Applications#readme",
+  "dependencies": {
+    "lit-html": "^2.4.0"
+  }
+}
