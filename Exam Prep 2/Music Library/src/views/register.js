@@ -7,11 +7,9 @@ export const registerPage = (ctx) => {
 
         const form = new FormData(e.target);
 
-        let {
-            email,
-            password,
-            'confirm-password': repeatPass,
-        } = Object.fromEntries(form);
+        let { email, password, 're-password': repeatPass } = Object.fromEntries(form);
+
+        console.log(password, repeatPass);
 
         email = email.trim();
         console.log(repeatPass);
@@ -40,12 +38,22 @@ export const registerTemplate = (onRegister) => {
             <section id="register">
                 <div class="form">
                     <h2>Register</h2>
-                    <form class="login-form">
+                    <form class="login-form" @submit=${onRegister}>
                         <input type="text" name="email" id="register-email" placeholder="email" />
-                        <input type="password" name="password" id="register-password" placeholder="password" />
-                        <input type="password" name="re-password" id="repeat-password" placeholder="repeat password" />
+                        <input
+                            type="password"
+                            name="password"
+                            id="register-password"
+                            placeholder="password"
+                        />
+                        <input
+                            type="password"
+                            name="re-password"
+                            id="repeat-password"
+                            placeholder="repeat password"
+                        />
                         <button type="submit">register</button>
-                        <p class="message"> Already registered? <a href="#">Login</a> </p>
+                        <p class="message">Already registered? <a href="/login">Login</a></p>
                     </form>
                 </div>
             </section>

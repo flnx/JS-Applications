@@ -6,7 +6,7 @@ export const navTemplate = (auth) => {
     return html`
         <header>
             <!-- Navigation -->
-            <a id="logo" href="/"><img id="logo-img" src="./images/logo.png" alt="" /></a>
+            <a id="logo" href="/"><img id="logo-img" src="/images/logo.png" alt="" /></a>
 
             <nav>
                 <div>

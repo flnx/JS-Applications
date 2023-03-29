@@ -5,8 +5,6 @@ export const loginPage = (ctx) => {
     const onLogin = async (e) => {
         e.preventDefault();
 
-        console.log(e);
-
         const form = new FormData(e.target);
 
         let { email, password } = Object.fromEntries(form);

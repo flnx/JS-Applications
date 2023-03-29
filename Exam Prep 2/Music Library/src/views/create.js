@@ -16,7 +16,8 @@ export const createPage = (ctx) => {
 
         e.target.reset();
         await createItem(item);
-        ctx.page.redirect('/');
+
+        ctx.page.redirect('/catalog');
     };
 
     ctx.render(createTemplate(onCreate));
@@ -26,7 +27,7 @@ const createTemplate = (onCreate) => html`
     <main>
         <!-- Create Page (Only for logged-in users) -->
         <section id="create">
-            <div class="form">
+            <div class="form" @submit=${onCreate}>
                 <h2>Add Album</h2>
                 <form class="create-form">
                     <input type="text" name="singer" id="album-singer" placeholder="Singer/Band" />

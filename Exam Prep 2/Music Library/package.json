@@ -5,7 +5,8 @@
   "main": "index.html",
   "scripts": {
     "test": "mocha tests",
-    "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1"
+    "start": "http-server -a localhost -p 3000 -P http://localhost:3000? -c-1",
+    "dev": "lite-server"
   },
   "author": "",
   "license": "ISC",
@@ -14,9 +15,10 @@
     "page": "1.11.6"
   },
   "devDependencies": {
+    "chai": "4.3.4",
     "http-server": "0.12.3",
-    "playwright-chromium": "1.9.2",
+    "lite-server": "^2.6.1",
     "mocha": "8.3.2",
-    "chai": "4.3.4"
+    "playwright-chromium": "1.9.2"
   }
 }
