@@ -2,51 +2,44 @@ import { editItem, getItemDetails } from '../api/data.js';
 import { html } from '../lib.js';
 
 export const editPage = async (ctx) => {
-  const data = await getItemDetails(ctx.params.id);
+    const data = await getItemDetails(ctx.params.id);
 
-  const onEdit = async (e) => {
-    e.preventDefault();
+    const onEdit = async (e) => {
+        e.preventDefault();
 
-    const form = new FormData(e.target);
-    const item = Object.assign({}, Object.fromEntries(form));
+        const form = new FormData(e.target);
+        const item = Object.assign({}, Object.fromEntries(form));
 
-    const hasEmptyField = Object.values(item).some((x) => x == '');
+        const hasEmptyField = Object.values(item).some((x) => x == '');
 
-    if (hasEmptyField) {
-      return alert('All fields are required');
-    }
+        if (hasEmptyField) {
+            return alert('All fields are required');
+        }
 
-    await editItem(ctx.params.id, item);
-    e.target.reset();
-    ctx.page.redirect(`/details/${ctx.params.id}`);
-  };
+        await editItem(ctx.params.id, item);
+        e.target.reset();
+        ctx.page.redirect(`/details/${ctx.params.id}`);
+    };
 
-  ctx.render(editTemplate(data, onEdit));
+    ctx.render(editTemplate(data, onEdit));
 };
 
 const editTemplate = (data, onEdit) => html`
-  <main id="main-content">
-    <section id="edit-page" class="auth">
-      <form id="edit" @submit=${onEdit}>
-        <div class="container">
-          <h1>Edit Game</h1>
-          <label for="leg-title">Legendary title:</label>
-          <input type="text" id="title" name="title" .value=${data.title} value="" />
+<main>
+    <section id="edit">
+        <div class="form">
+            <h2>Edit Album</h2>
+            <form class="edit-form">
+                <input type="text" name="singer" id="album-singer" placeholder="Singer/Band" />
+                <input type="text" name="album" id="album-album" placeholder="Album" />
+                <input type="text" name="imageUrl" id="album-img" placeholder="Image url" />
+                <input type="text" name="release" id="album-release" placeholder="Release date" />
+                <input type="text" name="label" id="album-label" placeholder="Label" />
+                <input type="text" name="sales" id="album-sales" placeholder="Sales" />
 
-          <label for="category">Category:</label>
-          <input type="text" id="category" name="category" .value=${data.category} value="" />
-
-          <label for="levels">MaxLevel:</label>
-          <input type="number" id="maxLevel" name="maxLevel" min="1" .value=${data.maxLevel} value="" />
-
-          <label for="game-img">Image:</label>
-          <input type="text" id="imageUrl" name="imageUrl" .value=${data.imageUrl} value="" />
-
-          <label for="summary">Summary:</label>
-          <textarea name="summary" id="summary" .value=${data.summary}></textarea>
-          <input class="btn submit" type="submit" value="Edit Game" />
+                <button type="submit">post</button>
+            </form>
         </div>
-      </form>
     </section>
-  </main>
+</main>
 `;
