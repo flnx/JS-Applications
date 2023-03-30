@@ -2,41 +2,99 @@ import { createItem } from '../api/data.js';
 import { html } from '../lib.js';
 
 export const createPage = (ctx) => {
-  const onCreate = async (e) => {
-    e.preventDefault();
+    const onCreate = async (e) => {
+        e.preventDefault();
 
-    const form = new FormData(e.target);
-    const item = Object.assign({}, Object.fromEntries(form));
+        const form = new FormData(e.target);
+        const item = Object.assign({}, Object.fromEntries(form));
 
-    const hasEmptyField = Object.values(item).some((x) => x == '');
+        const hasEmptyField = Object.values(item).some((x) => x == '');
 
-    if (hasEmptyField) {
-      return ctx.notify('All fields are required');
-    }
-    
-    e.target.reset();
-    await createItem(item);
-    ctx.page.redirect('/all-memes');
-  };
+        if (hasEmptyField) {
+            return window.alert('All fields are required');
+        }
 
-  ctx.render(createTemplate(onCreate));
+        e.target.reset();
+        await createItem(item);
+        ctx.page.redirect('/catalog');
+    };
+
+    ctx.render(createTemplate(onCreate));
 };
 
 const createTemplate = (onCreate) => html`
-  <main>
-    <section id="create-meme">
-      <form @submit=${onCreate} id="create-form">
-        <div class="container">
-          <h1>Create Meme</h1>
-          <label for="title">Title</label>
-          <input id="title" type="text" placeholder="Enter Title" name="title" />
-          <label for="description">Description</label>
-          <textarea id="description" placeholder="Enter Description" name="description"></textarea>
-          <label for="imageUrl">Meme Image</label>
-          <input id="imageUrl" type="text" placeholder="Enter meme ImageUrl" name="imageUrl"/>
-          <input type="submit" class="registerbtn button" value="Create Meme" />
-        </div>
-      </form>
-    </section>
-  </main>
+    <main id="main-content">
+        <section class="createPage">
+            <form @submit=${onCreate}>
+                <fieldset>
+                    <legend>Add Album</legend>
+
+                    <div class="container">
+                        <label for="name" class="vhide">Album name</label>
+                        <input
+                            id="name"
+                            name="name"
+                            class="name"
+                            type="text"
+                            placeholder="Album name"
+                        />
+
+                        <label for="imgUrl" class="vhide">Image Url</label>
+                        <input
+                            id="imgUrl"
+                            name="imgUrl"
+                            class="imgUrl"
+                            type="text"
+                            placeholder="Image Url"
+                        />
+
+                        <label for="price" class="vhide">Price</label>
+                        <input
+                            id="price"
+                            name="price"
+                            class="price"
+                            type="text"
+                            placeholder="Price"
+                        />
+
+                        <label for="releaseDate" class="vhide">Release date</label>
+                        <input
+                            id="releaseDate"
+                            name="releaseDate"
+                            class="releaseDate"
+                            type="text"
+                            placeholder="Release date"
+                        />
+
+                        <label for="artist" class="vhide">Artist</label>
+                        <input
+                            id="artist"
+                            name="artist"
+                            class="artist"
+                            type="text"
+                            placeholder="Artist"
+                        />
+
+                        <label for="genre" class="vhide">Genre</label>
+                        <input
+                            id="genre"
+                            name="genre"
+                            class="genre"
+                            type="text"
+                            placeholder="Genre"
+                        />
+
+                        <label for="description" class="vhide">Description</label>
+                        <textarea
+                            name="description"
+                            class="description"
+                            placeholder="Description"
+                        ></textarea>
+
+                        <button class="add-album" type="submit">Add New Album</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </main>
 `;

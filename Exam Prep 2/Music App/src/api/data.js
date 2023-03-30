@@ -1,12 +1,12 @@
 import * as api from './api.js';
 
 const endpoints = {
-  getItems: 'data/memes?sortBy=_createdOn%20desc',
-  post: 'data/memes', 
-  edit: (id) => `data/memes/${id}`,
-  delete: (id) => `data/memes/${id}`,
-  itemDetails: (id) => `data/memes/${id}`,
-  profile: (userId) => `data/memes?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`
+  getItems: 'data/albums?sortBy=_createdOn%20desc&distinct=name',
+  post: 'data/albums', 
+  edit: (id) => `data/albums/${id}`,
+  delete: (id) => `data/albums/${id}`,
+  itemDetails: (id) => `data/albums/${id}`,
+  search: (query) => `data/albums?where=name%20LIKE%20%22${query}%22`
 };
 
 export async function getItems() {
@@ -29,6 +29,6 @@ export async function editItem(id, data) {
   return await api.put(endpoints.edit(id), data);
 }
 
-export async function userProfile(userId) {
-  return await api.get(endpoints.profile(userId));
+export async function getSearchResult(query) {
+  return await api.get(endpoints.search(query));
 }
